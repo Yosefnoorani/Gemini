@@ -25,15 +25,15 @@ if __name__ == '__main__':
     #    if 'generateContent' in m.supported_generation_methods:
     #        print(m.name)
 
-    model = genai.GenerativeModel('gemini-pro-vision')
-    #model = genai.GenerativeModel('gemini-pro')
+    # model = genai.GenerativeModel('gemini-pro-vision')
+    model = genai.GenerativeModel('gemini-pro')
 
 
     img = Image.open('C:\\Users\\yosef\\Downloads\\photo_2024-04-09_16-08-24.jpg')
 
     #%%time
-    response = model.generate_content(["Describe the item on the picture and where i can buy it and give me other suggestion in similar product lower price", img], stream=True)
-    #response = model.generate_content(["Hi! Please provide a list of supported real devices on BrowserStack platform Please include the following devices in your list: Galaxy S24, Ultra Galaxy S24+, Galaxy S24, Galaxy Z Fold 5, Galaxy Z Flip 5, iPhone 15, Pro iPhone 15, iPhone 14, Pro  iPhone 14,iPhone SE (3rd), Pixel 5a, Pixel 6, Pixel 6 Pro, Pixel 6a, Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel Fold Pixel 8, Pixel 8 Pro"], stream=True)
+    # response = model.generate_content(["Describe the item on the picture and where i can buy it and give me other suggestion in similar product lower price", img], stream=True)
+    response = model.generate_content(["Hi! Please provide a list of supported real devices on BrowserStack platform Please include the following devices in your list: Galaxy S24, Ultra Galaxy S24+, Galaxy S24, Galaxy Z Fold 5, Galaxy Z Flip 5, iPhone 15, Pro iPhone 15, iPhone 14, Pro  iPhone 14,iPhone SE (3rd), Pixel 5a, Pixel 6, Pixel 6 Pro, Pixel 6a, Pixel 7, Pixel 7 Pro, Pixel 7a, Pixel Fold Pixel 8, Pixel 8 Pro"], stream=True)
 
     response.resolve()
 
