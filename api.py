@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 
 def generate_content(image_path):
-
+    #test
     GOOGLE_API_KEY = 'AIzaSyAPl3if3Qhr5i1dmSLD_RVyZT_p9nyTneM'
     genai.configure(api_key=GOOGLE_API_KEY)
     model = genai.GenerativeModel('gemini-pro-vision')
