@@ -1,7 +1,7 @@
 import os
-import textwrap
+# import textwrap
 
-import markdown
+# import markdown
 from PIL import Image
 import google.generativeai as genai
 from flask import Flask, request, jsonify
@@ -11,6 +11,7 @@ app = Flask(__name__)
 
 
 def generate_content(image_path):
+
     GOOGLE_API_KEY = 'AIzaSyAPl3if3Qhr5i1dmSLD_RVyZT_p9nyTneM'
     genai.configure(api_key=GOOGLE_API_KEY)
     model = genai.GenerativeModel('gemini-pro-vision')
@@ -35,7 +36,7 @@ def generate_content(image_path):
 
 @app.route('/', methods=['GET'])
 def hello():
-    return ("hello")
+    return "hello"
 
 
 @app.route('/generate', methods=['POST'])
@@ -68,7 +69,6 @@ def generate_from_image():
     # html_content = markdown.markdown(generated_text)
 
     # Delete the temporary image file
-
 
     # return html_content
 
