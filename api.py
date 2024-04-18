@@ -24,7 +24,7 @@ def generate_content(image_path):
         Describe and expand knowledge about the product, Give me a technical specification 
         about the product, Offer me cheaper similar products with prices, 
         URL to the store to purchase the original product
-        insert the answers to json by subjects:
+        proved the answers by json with subjects:
         companyName, productName, about, techSpecs, similarItem
         """
     response = model.generate_content([
