@@ -2,9 +2,10 @@ import os
 from PIL import Image
 import google.generativeai as genai
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 
 def generate_content(image_path):
     google_api_key = os.environ.get('GOOGLE_API_KEY')
