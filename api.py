@@ -13,7 +13,20 @@ def generate_content(image_path):
     model = genai.GenerativeModel('gemini-pro-vision')
 
     img = Image.open(image_path)
-    content = "I am looking for such a product. Can you provide me 1. What is the name of the manufacturer of the product (Only the name)2. What is the name of the product 3. Describe and expand knowledge about the product 4. Give me a technical specification about the product 5. Offer me cheaper similar products with prices 6. URL to the store to purchase the original product"
+    # content = """I am looking for such a product. Can you provide me 1. What is the name of
+    # the manufacturer of the product (Only the name)2. What is the name of the product
+    # 3. Describe and expand knowledge about the product 4. Give me a technical specification
+    # about the product 5. Offer me cheaper similar products with prices 6.
+    # URL to the store to purchase the original product"""
+
+    content = """I am looking for such a product. Can you provide me : What is the name of 
+        the manufacturer of the product (Only the name), What is the name of the product,
+        Describe and expand knowledge about the product, Give me a technical specification 
+        about the product, Offer me cheaper similar products with prices, 
+        URL to the store to purchase the original product
+        insert the answers to json by subjects:
+        companyName, productName, about, techSpecs, similarItem
+        """
     response = model.generate_content([
                                           content,
                                           img], stream=True)
