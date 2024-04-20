@@ -19,14 +19,14 @@ def generate_content(image_path):
     # about the product 5. Offer me cheaper similar products with prices 6.
     # URL to the store to purchase the original product"""
 
-    content = """I am looking for such a product. Can you provide me : What is the name of 
-        the manufacturer of the product (Only the name), What is the name of the product,
-        Describe and expand knowledge about the product, Give me a technical specification 
-        about the product, Offer me cheaper similar products with prices, 
-        URL to the store to purchase the original product
-        proved the answers by json with subjects:
-        companyName, productName, about, techSpecs, similarItem
-        """
+    content = """I am looking for such a product. Can you provide me (Response in JSON format): 
+                    "companyName": What is the name of the manufacturer of the product (Only the name), 
+                    "productName": What is the name of the product,
+                    "about": Describe and expand knowledge about the product, 
+                    "techSpecs": Give me a technical specification about the product, 
+                    "similarItem": Offer me cheaper similar products with prices, 
+                    "purchaseURL": URL to the store to purchase the original product
+                    """
     response = model.generate_content([
                                           content,
                                           img], stream=True)
