@@ -17,7 +17,7 @@
 #
 # # Press the green button in the gutter to run the script.
 # if __name__ == '__main__':
-#     GOOGLE_API_KEY = 'AIzaSyAPl3if3Qhr5i1dmSLD_RVyZT_p9nyTneM'
+#     GOOGLE_API_KEY = '@@@@@@@'
 #
 #     genai.configure(api_key=GOOGLE_API_KEY)
 #
