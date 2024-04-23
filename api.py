@@ -46,8 +46,8 @@ def generate_from_image():
     if 'image' not in request.files:
         return jsonify({'error': 'No image provided'})
 
+    print("Start request")
     image = request.files['image']
-    print("get the image")
     # print(image)
     if image.filename == '':
         return jsonify({'error': 'No selected image file'})
@@ -61,7 +61,7 @@ def generate_from_image():
     # generated_text = generate_content(image)
     # print(generated_text)
     os.remove(temp_image_path)
-    # print(generated_text)
+    print("End response")
     return generated_text
 
 
