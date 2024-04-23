@@ -32,6 +32,7 @@ def generate_content(image_path):
                                           img], stream=True)
     response.resolve()
     print(model.count_tokens(response.text))
+    print(response.text)
     return response.text
 
 
@@ -46,6 +47,7 @@ def generate_from_image():
         return jsonify({'error': 'No image provided'})
 
     image = request.files['image']
+    print("get the image")
     # print(image)
     if image.filename == '':
         return jsonify({'error': 'No selected image file'})
@@ -59,6 +61,7 @@ def generate_from_image():
     # generated_text = generate_content(image)
     # print(generated_text)
     os.remove(temp_image_path)
+    # print(generated_text)
     return generated_text
 
 
