@@ -12,16 +12,14 @@ CORS(app)
 def generate_content(image_path):
     google_api_key = os.environ.get('GOOGLE_API_KEY')
 
+    google_api_key = 'AIzaSyAPl3if3Qhr5i1dmSLD_RVyZT_p9nyTneM'
+
 
     genai.configure(api_key=google_api_key)
     model = genai.GenerativeModel('gemini-pro-vision')
 
     img = Image.open(image_path)
-    # content = """I am looking for such a product. Can you provide me 1. What is the name of
-    # the manufacturer of the product (Only the name)2. What is the name of the product
-    # 3. Describe and expand knowledge about the product 4. Give me a technical specification
-    # about the product 5. Offer me cheaper similar products with prices 6.
-    # URL to the store to purchase the original product"""
+
 
     content = """I am looking for such a product. Can you provide me (Response in JSON format): 
                     "companyName": What is the name of the manufacturer of the product (Only the name), 
@@ -38,9 +36,16 @@ def generate_content(image_path):
     print(model.count_tokens(response.text))
 
     result = response.text
+    # print(result)
+    # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+    # Clean the Json
     result = result.rstrip("`")
-    result = result.lstrip(" ``` JSON")
-    result = result.lstrip("json")
+    result = result[result.find('{'):]
+
+
+    # result = result.lstrip(" ``` JSON")
+    # result = result.lstrip("json")
 
     print(result)
     if(validateJSON(result)):
