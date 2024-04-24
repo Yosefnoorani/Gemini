@@ -60,6 +60,7 @@ def validateJSON(jsonData):
     try:
         json.loads(jsonData)
     except ValueError as err:
+        print(err)
 
         jsonData = """
         {
