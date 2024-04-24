@@ -62,13 +62,13 @@ def validateJSON(jsonData):
     except ValueError as err:
         print(err)
 
-        jsonData = """
-        {
-            "companyName": "IWI",
-            "productName": "Tavor X95",
-            "about": "PlaceHolder"
-        }
-        """
+        # jsonData = """
+        # {
+        #     "companyName": "IWI",
+        #     "productName": "Tavor X95",
+        #     "about": "PlaceHolder"
+        # }
+        # """
         # jsonData = fix_broken_json(jsonData)
         print("EEEERRRRRRRRRRRRRRPORRRRR....")
         # print(jsonData)
