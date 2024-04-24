@@ -12,7 +12,6 @@ CORS(app)
 def generate_content(image_path):
     google_api_key = os.environ.get('GOOGLE_API_KEY')
 
-    google_api_key = 'AIzaSyAPl3if3Qhr5i1dmSLD_RVyZT_p9nyTneM'
 
 
     genai.configure(api_key=google_api_key)
@@ -48,11 +47,11 @@ def generate_content(image_path):
     # result = result.lstrip("json")
 
     # print(result)
-    result = validateJSON(result)
-    if(result):
-        return result
-    else:
-        return f"Unable to fix broken JSON"
+    return validateJSON(result)
+    # if(result):
+    #     return result
+    # else:
+    #     return f"Unable to fix broken JSON"
 
 
 
@@ -77,25 +76,25 @@ def validateJSON(jsonData):
     return jsonData
 
 
-def fix_broken_json(broken_json):
-    try:
-        # Try parsing the JSON
-        json.loads(broken_json)
-        # If successful, return the original JSON
-        return broken_json
-    except json.JSONDecodeError as e:
-        # If parsing fails, attempt to fix the JSON
-        fixed_json = broken_json.replace("'", '"')  # Replace single quotes with double quotes
-        fixed_json = fixed_json.replace("\\", "")  # Remove backslashes
-        fixed_json = fixed_json.replace('\n', ' ')  # Remove newline characters
-        fixed_json = fixed_json.replace('"\n"', '"Placeholder"')  # Replace empty string with placeholder
-        # Try parsing the fixed JSON
-        try:
-            json.loads(fixed_json)
-            return fixed_json
-        except json.JSONDecodeError as e:
-            # If still unsuccessful, return an error message
-            return f"Unable to fix broken JSON: {e}"
+# def fix_broken_json(broken_json):
+#     try:
+#         # Try parsing the JSON
+#         json.loads(broken_json)
+#         # If successful, return the original JSON
+#         return broken_json
+#     except json.JSONDecodeError as e:
+#         # If parsing fails, attempt to fix the JSON
+#         fixed_json = broken_json.replace("'", '"')  # Replace single quotes with double quotes
+#         fixed_json = fixed_json.replace("\\", "")  # Remove backslashes
+#         fixed_json = fixed_json.replace('\n', ' ')  # Remove newline characters
+#         fixed_json = fixed_json.replace('"\n"', '"Placeholder"')  # Replace empty string with placeholder
+#         # Try parsing the fixed JSON
+#         try:
+#             json.loads(fixed_json)
+#             return fixed_json
+#         except json.JSONDecodeError as e:
+#             # If still unsuccessful, return an error message
+#             return f"Unable to fix broken JSON: {e}"
 
 
 @app.route('/', methods=['GET'])
