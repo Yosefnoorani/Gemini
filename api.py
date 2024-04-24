@@ -8,7 +8,10 @@ app = Flask(__name__)
 CORS(app)
 
 def generate_content(image_path):
-    google_api_key = os.environ.get('GOOGLE_API_KEY')
+    # google_api_key = os.environ.get('GOOGLE_API_KEY')
+
+
+
     genai.configure(api_key=google_api_key)
     model = genai.GenerativeModel('gemini-pro-vision')
 
@@ -32,9 +35,10 @@ def generate_content(image_path):
                                           img], stream=True)
     response.resolve()
     print(model.count_tokens(response.text))
-    greeting = '```JSON'
+
     result = response.text
-    result = greeting.rstrip()
+    result = result.rstrip("`")
+    result = result.lstrip(" ``` JSON")
 
     print(result)
 
@@ -44,7 +48,7 @@ def generate_content(image_path):
 
 @app.route('/', methods=['GET'])
 def hello():
-    return "hello"
+    return "Hello"
 
 
 @app.route('/generate', methods=['POST'])
