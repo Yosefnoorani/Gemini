@@ -34,46 +34,64 @@ def generate_content(image_path):
     response.resolve()
     print(model.count_tokens(response.text))
 
-    result = response.text
-    # print(result)
-    # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    # result = response.text
+    #
+    #
+    # # Clean the Json
+    # result = result.rstrip("`")
+    # result = result[result.find('{'):]
 
-    # Clean the Json
-    result = result.rstrip("`")
-    result = result[result.find('{'):]
-
-
-    # result = result.lstrip(" ``` JSON")
-    # result = result.lstrip("json")
-
-    # print(result)
-    return validateJSON(result)
-    # if(result):
-    #     return result
-    # else:
-    #     return f"Unable to fix broken JSON"
+    return validateJSON(response)
 
 
 
-def validateJSON(jsonData):
-    try:
-        json.loads(jsonData)
-    except ValueError as err:
-        print(jsonData)
-        print(err)
 
-        # jsonData = """
-        # {
-        #     "companyName": "IWI",
-        #     "productName": "Tavor X95",
-        #     "about": "PlaceHolder"
-        # }
-        # """
-        # jsonData = fix_broken_json(jsonData)
-        print("EEEERRRRRRRRRRRRRRPORRRRR....")
-        # print(jsonData)
+def validateJSON(response):
 
-    return jsonData
+    # STOP (1): Natural stop point of the model or provided stop sequence
+    # https://cloud.google.com/python/docs/reference/aiplatform/latest/google.cloud.aiplatform_v1.types.Candidate.FinishReason
+    if (response.candidates[0].finish_reason == 1):
+        result = response.text
+        result = result.rstrip("`")
+        result = result[result.find('{'):]
+
+        parsed_data = json.loads(result)
+
+        # Add the "success" key as the first key
+        updated_data = {'success': True}
+
+        # Add the original JSON data under the "data" key
+        updated_data['data'] = parsed_data
+
+        # Convert the updated data back to JSON
+        updated_json = json.dumps(updated_data)
+        print("Success")
+        print(updated_json)
+        return updated_json
+
+
+    else:
+        print("Error")
+        # Create a dictionary with the error message
+
+        # Create the updated data dictionary
+        updated_data = {
+            "success": False,
+            "data": str(response.candidates[0].safety_ratings)
+        }
+
+        # Convert the updated data to JSON
+        updated_json = json.dumps(updated_data)
+
+        # If the response doesn't contain text, check if the prompt was blocked.
+        # print(response.prompt_feedback)
+        # Also check the finish reason to see if the response was blocked.
+        # print(response.candidates[0].finish_reason)
+        # # If the finish reason was SAFETY, the safety ratings have more details.
+        print(updated_json)
+        return updated_json
+
+
 
 
 # def fix_broken_json(broken_json):
@@ -126,7 +144,7 @@ def generate_from_image():
 
 
     print("End response")
-    print(generated_text)
+    # print(generated_text)
     return generated_text
 
 
