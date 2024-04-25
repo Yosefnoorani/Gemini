@@ -20,26 +20,28 @@ def generate_content(image_path):
     img = Image.open(image_path)
 
 
-    content = """I am looking for such a product. Can you provide me (Response in JSON format): 
-                    "companyName": What is the name of the manufacturer of the product (Only the name), 
+    content = """I am looking for such a product. Can you provide me (Response in JSON format):
+                    "companyName": What is the name of the manufacturer of the product (Only the name),
                     "productName": What is the name of the product,
-                    "about": Describe and expand knowledge about the product, 
-                    "techSpecs": Give me a technical specification about the product, 
-                    "similarItem": Offer me cheaper similar products with prices, 
+                    "about": Describe and expand knowledge about the product,
+                    "techSpecs": Give me a technical specification about the product,
+                    "similarItem": Offer me cheaper similar products with prices,
                     "purchaseURL": URL to the store to purchase the original product
                     """
+
+    # content = """I'm interested in a particular product. Could you please provide the following information in JSON format:
+    #                     "companyName": Name of the manufacturer (Only the name)
+    #                     "productName": Product name
+    #                     "about": Description and additional details about the product
+    #                     "techSpecs": Technical specifications of the product
+    #                     "similarItem": Recommendations for similar, more affordable products along with their prices
+    #                     "purchaseURL": URL to purchase the original product from the store
+    #                     """
     response = model.generate_content([
                                           content,
                                           img], stream=True)
     response.resolve()
     print(model.count_tokens(response.text))
-
-    # result = response.text
-    #
-    #
-    # # Clean the Json
-    # result = result.rstrip("`")
-    # result = result[result.find('{'):]
 
     return validateJSON(response)
 
@@ -65,16 +67,13 @@ def validateJSON(response):
 
         # Convert the updated data back to JSON
         updated_json = json.dumps(updated_data)
-        print("Success")
+        # print("Success")
         print(updated_json)
         return updated_json
 
 
     else:
-        print("Error")
-        # Create a dictionary with the error message
-
-        # Create the updated data dictionary
+        # print("Error")
         updated_data = {
             "success": False,
             "data": str(response.candidates[0].safety_ratings)
@@ -91,28 +90,6 @@ def validateJSON(response):
         print(updated_json)
         return updated_json
 
-
-
-
-# def fix_broken_json(broken_json):
-#     try:
-#         # Try parsing the JSON
-#         json.loads(broken_json)
-#         # If successful, return the original JSON
-#         return broken_json
-#     except json.JSONDecodeError as e:
-#         # If parsing fails, attempt to fix the JSON
-#         fixed_json = broken_json.replace("'", '"')  # Replace single quotes with double quotes
-#         fixed_json = fixed_json.replace("\\", "")  # Remove backslashes
-#         fixed_json = fixed_json.replace('\n', ' ')  # Remove newline characters
-#         fixed_json = fixed_json.replace('"\n"', '"Placeholder"')  # Replace empty string with placeholder
-#         # Try parsing the fixed JSON
-#         try:
-#             json.loads(fixed_json)
-#             return fixed_json
-#         except json.JSONDecodeError as e:
-#             # If still unsuccessful, return an error message
-#             return f"Unable to fix broken JSON: {e}"
 
 
 @app.route('/', methods=['GET'])
