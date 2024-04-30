@@ -12,7 +12,7 @@ CORS(app)
 def generate_content(image_path):
     google_api_key = os.environ.get('GOOGLE_API_KEY')
 
-
+    google_api_key = 'AIzaSyAPl3if3Qhr5i1dmSLD_RVyZT_p9nyTneM'
 
     genai.configure(api_key=google_api_key)
     model = genai.GenerativeModel('gemini-pro-vision')
@@ -20,23 +20,23 @@ def generate_content(image_path):
     img = Image.open(image_path)
 
 
-    content = """I am looking for such a product. Can you provide me (Response in JSON format):
-                    "companyName": What is the name of the manufacturer of the product (Only the name),
-                    "productName": What is the name of the product,
-                    "about": Describe and expand knowledge about the product,
-                    "techSpecs": Give me a technical specification about the product,
-                    "similarItem": Offer me cheaper similar products with prices,
-                    "purchaseURL": URL to the store to purchase the original product
-                    """
+    # content = """I am looking for such a product. Can you provide me (Response in JSON format):
+    #                 "companyName": What is the name of the manufacturer of the product (Only the name),
+    #                 "productName": What is the name of the product,
+    #                 "about": Describe and expand knowledge about the product,
+    #                 "techSpecs": Give me a technical specification about the product,
+    #                 "similarItem": Offer me cheaper similar products with prices,
+    #                 "purchaseURL": URL to the store to purchase the original product
+    #                 """
 
-    # content = """I'm interested in a particular product. Could you please provide the following information in JSON format:
-    #                     "companyName": Name of the manufacturer (Only the name)
-    #                     "productName": Product name
-    #                     "about": Description and additional details about the product
-    #                     "techSpecs": Technical specifications of the product
-    #                     "similarItem": Recommendations for similar, more affordable products along with their prices
-    #                     "purchaseURL": URL to purchase the original product from the store
-    #                     """
+    content = """I am looking for such a product. Can you provide me (Response in JSON format):
+                        "companyName": What is the name of the manufacturer of the product (Only the name),
+                        "productName": What is the name of the product,
+                        "about": Describe and expand knowledge about the product and the price of the product,
+                        "techSpecs": Give me a technical specification about the product,
+                        "similarItem": Offer me cheaper similar products with prices and address to purchase for each product,
+                        "purchaseURL": URL to the store to purchase the original product
+                        """
     response = model.generate_content([
                                           content,
                                           img], stream=True)
