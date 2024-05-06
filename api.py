@@ -12,35 +12,20 @@ CORS(app)
 def generate_content(image_path):
     google_api_key = os.environ.get('GOOGLE_API_KEY')
 
-
     genai.configure(api_key=google_api_key)
     model = genai.GenerativeModel('gemini-pro-vision')
 
     img = Image.open(image_path)
 
-
-    # content = """I am looking for such a product. Can you provide me (Response in JSON format):
-    #                 "companyName": What is the name of the manufacturer of the product (Only the name),
-    #                 "productName": What is the name of the product,
-    #                 "about": Describe and expand knowledge about the product,
-    #                 "techSpecs": Give me a technical specification about the product,
-    #                 "similarItem": Offer me cheaper similar products with prices,
-    #                 "purchaseURL": URL to the store to purchase the original product
-    #                 """
-
-    content = """I am looking for such a product. Can you provide me (Response in JSON format):
-                        "companyName": What is the name of the manufacturer of the product (Only the name),
-                        "productName": What is the name of the product,
-                        "about": Describe and expand knowledge about the product and the price of the product,
-                        "techSpecs": Give me a technical specification about the product,
-                        "similarItem": Offer me cheaper similar products with prices and address to purchase for each product,
-                        "purchaseURL": URL to the store to purchase the original product
-                        """
+    content = """
+    YKVK
+    """
     response = model.generate_content([
                                           content,
                                           img], stream=True)
     response.resolve()
     print(model.count_tokens(response.text))
+    print(response.text)
 
     return validateJSON(response)
 
@@ -81,11 +66,6 @@ def validateJSON(response):
         # Convert the updated data to JSON
         updated_json = json.dumps(updated_data)
 
-        # If the response doesn't contain text, check if the prompt was blocked.
-        # print(response.prompt_feedback)
-        # Also check the finish reason to see if the response was blocked.
-        # print(response.candidates[0].finish_reason)
-        # # If the finish reason was SAFETY, the safety ratings have more details.
         print(updated_json)
         return updated_json
 
@@ -125,5 +105,4 @@ def generate_from_image():
 
 
 if __name__ == '__main__':
-    #YoSeFAIzaSyAPl3if3Qhr5i1dmSLD_RVyZT_p9nyTneM
     app.run(debug=True)
