@@ -18,7 +18,7 @@ def generate_content(image_path):
     img = Image.open(image_path)
 
     content = """
-    YKVK
+    The secret of success is -YKVK
     """
     response = model.generate_content([
                                           content,
